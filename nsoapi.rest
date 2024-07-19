@@ -1,9 +1,9 @@
 ### 1. Get address
-GET http://192.168.4.41:8090/restconf/data/tailf-ncs:devices/device=xr-1/address 
+GET http://192.168.4.41:8090/restconf/data/tailf-ncs:devices/device=j0/address 
 Authorization: Basic admin admin
 
 ### 2. Live-status
-POST http://10.70.83.24:8080/restconf/operations/tailf-ncs:devices/device=xr-2/live-status/exec/show
+POST http://192.168.4.41:8090/restconf/operations/tailf-ncs:devices/device=xr-2/live-status/exec/show
 Authorization: Basic admin admin
 Content-Type: application/yang-data+xml
 

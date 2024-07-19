@@ -5,7 +5,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.schema.runnable.config import RunnableConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
-from langchain_tools import HelloTool, getLoopback, verifyBGPstatus, verifyIFstatus, dryrunBGPconfig, setBGPconfig
+from langchain_tools import HelloTool, getLoopback, verifyBGPstatus, configBGPcheck, dryrunBGPconfig, setBGPconfig, pingCheck
 
 @cl.on_chat_start
 def start():
@@ -13,14 +13,14 @@ def start():
     llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, streaming=True)
 
     # ツールをロード
-    tools = [HelloTool(), getLoopback(), verifyBGPstatus(), verifyIFstatus(), dryrunBGPconfig(), setBGPconfig()]
+    tools = [HelloTool(), getLoopback(), verifyBGPstatus(), configBGPcheck(), dryrunBGPconfig(), setBGPconfig(), pingCheck()]
     #tools = load_tools(["ddg-search"])
     #tools.append([HelloTool(), getLoopback()])
 
     # プロンプトを作成
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", "You are an AI chatbot having a conversation with a human."),
+            ("system", "You are an AI chatbot having a conversation with a human. If the required input parameters are unclear, please ask the user to input."),
             MessagesPlaceholder(variable_name="chat_history"),
             ("user", "{input}"),
             MessagesPlaceholder(variable_name="agent_scratchpad"),
